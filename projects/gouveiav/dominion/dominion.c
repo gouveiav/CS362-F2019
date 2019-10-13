@@ -935,7 +935,6 @@ int tributeCardEffect(struct gameState *state) {
 
 int mineCardEffect(int choice1, int choice2, struct gameState *state, int handPos) {
 	int i, j;
-	int k = 0;
 	int currentPlayer = whoseTurn(state);
 
 	int j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -963,7 +962,7 @@ int mineCardEffect(int choice1, int choice2, struct gameState *state, int handPo
 	//discard trashed card
 	for (i = 1; i < state->handCount[currentPlayer]; i++)//bug here
 	{
-		if (state->hand[currentPlayer][i] == k) //bug here
+		if (state->hand[currentPlayer][i] == 1) //bug here
 		{
 			discardCard(i, currentPlayer, state, 0);
 			break;
