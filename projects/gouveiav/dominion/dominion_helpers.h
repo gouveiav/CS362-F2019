@@ -12,9 +12,14 @@ int getCost(int cardNumber);
 int cardEffect(int card, int choice1, int choice2, int choice3,
                struct gameState *state, int handPos, int *bonus);
 
+int verifyAmbassadorChoice(int choice1, int choice2, struct gameState *state, int handPos);
+
 int baronCardEffect(int choice1, struct gameState *state);
 int minonCardEffect(int choice1, int choice2, struct gameState *state, int handPos);
 int ambassadorCardEffect(int choice1, int choice2, struct gameState *state, int handPos);
 int tributeCardEffect(struct gameState *state);
 int mineCardEffect(int choice1, int choice2, struct gameState *state, int handPos);
+
+
+
 #endif
