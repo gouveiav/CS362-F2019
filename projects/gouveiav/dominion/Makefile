@@ -25,11 +25,11 @@ unittest5: unittest5.c dominion.o rngs.o
 	gcc  -o unittest5Mine -g  unittest5.c dominion.o rngs.o $(CFLAGS)
 
 unittestresults: unittest1 unittest2 unittest3 unittest4 unittest5
-	./unittest1Baron &> unittestresults.out
-	./unittest2Minion &> unittestresults.out
-	./unittest3Ambassador &> unittestresults.out
-	./unittest4Tribute &> unittestresults.out
-	./unittest5Mine &> unittestresults.out
+	./unittest1Baron >> unittestresults.out
+	./unittest2Minion >> unittestresults.out
+	./unittest3Ambassador >> unittestresults.out
+	./unittest4Tribute >> unittestresults.out
+	./unittest5Mine >> unittestresults.out
 	gcov -b -f dominion.c >> unittestresults.out
 	cat dominion.c.gcov >> unittestresults.out
 
