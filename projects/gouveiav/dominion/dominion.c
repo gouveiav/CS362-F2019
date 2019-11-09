@@ -4,6 +4,19 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+bool myAssert(int a, int b) {
+	if (a == b) {
+		return true;
+	}
+	else {
+		fprintf(stderr, "Assertion Failure: %d and %d d not match", a, b);
+		return false;
+	}
+}
+
+
 
 int compare(const void* a, const void* b) {
     if (*(int*)a > *(int*)b)

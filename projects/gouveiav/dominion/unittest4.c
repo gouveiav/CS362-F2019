@@ -6,8 +6,18 @@
 #include "rngs.h"
 
 //Unit test for tribute Card
+int testTributeCardEffect(struct gameState *post) {
+
+
+}
+
 int main() {
-	printf("Testing Tribute Card Effect Function");
+	int k[10] = { adventurer, council_room, feast, gardens, mine,
+			 remodel, smithy, village, baron, great_hall
+	};
+	//making a game to test
+	struct gameState G;
+	printf("Testing tributeCardEffect Function");
 
 }
 

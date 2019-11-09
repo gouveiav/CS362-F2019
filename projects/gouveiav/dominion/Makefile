@@ -11,7 +11,7 @@ playdom: dominion.o playdom.c
 #To run playdom you need to entere: ./playdom <any integer number> like ./playdom 10*/
 
 testDrawCard: testDrawCard.c dominion.o rngs.o
-	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
+	gcc  -o testdrawcard -g  testdrawcard.c dominion.o rngs.o $(CFLAGS)
 
 unittest1: unittest1.c dominion.o rngs.o
 	gcc  -o unittest1Baron -g  unittest1.c dominion.o rngs.o $(CFLAGS)
@@ -25,21 +25,21 @@ unittest5: unittest5.c dominion.o rngs.o
 	gcc  -o unittest5Mine -g  unittest5.c dominion.o rngs.o $(CFLAGS)
 
 unittestresults: unittest1 unittest2 unittest3 unittest4 unittest5
-	./unittest1Baron >> unittestresults.out
-	./unittest2Minion >> unittestresults.out
-	./unittest3Ambassador >> unittestresults.out
-	./unittest4Tribute >> unittestresults.out
-	./unittest5Mine >> unittestresults.out
+	./unittest1Baron &> unittestresults.out
+	./unittest2Minion &> unittestresults.out
+	./unittest3Ambassador &> unittestresults.out
+	./unittest4Tribute &> unittestresults.out
+	./unittest5Mine &> unittestresults.out
 	gcov -b -f dominion.c >> unittestresults.out
 	cat dominion.c.gcov >> unittestresults.out
 
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
-#runtests: testDrawCard 
-#	./testDrawCard &> unittestresult.out
-#	gcov dominion.c >> unittestresult.out
-#	cat dominion.c.gcov >> unittestresult.out
+runtests: testDrawCard 
+	./testDrawCard &> testDrawResult.out
+	gcov dominion.c >> testDrawResult.out
+	cat dominion.c.gcov >> testDrawResult.out
 
 
 player: player.c interface.o
