@@ -35,7 +35,7 @@ void testBaronCardEffect(int choice, struct gameState *post) {
 }
 
 int main() {
-	int r, p;
+	int p;
 	//int handCount = 3;
 	int k[10] = { adventurer, council_room, feast, gardens, mine,
 				 remodel, smithy, village, baron, great_hall
@@ -49,7 +49,7 @@ int main() {
 
 	// initialize a new game  //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
 	//	struct gameState *state)
-	r = initializeGame(2, k, 24, &G); 
+	initializeGame(2, k, 24, &G); 
 	//assert(r == 0);
 
 

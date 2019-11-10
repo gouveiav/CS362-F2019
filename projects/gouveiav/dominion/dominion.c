@@ -12,12 +12,10 @@ bool myAssert(int a, int b) {
 		return true;
 	}
 	else {
-		printf("Failure: %d and %d do not match\n", a, b);
+		printf("Failure: %d != %d \n", a, b);
 		return false;
 	}
 }
-
-
 
 int compare(const void* a, const void* b) {
     if (*(int*)a > *(int*)b)
@@ -430,7 +428,7 @@ int isGameOver(struct gameState *state) {
     return 0;
 }
 
-int scoreFor (int player, struct gameState *state) {
+int scoreFor(int player, struct gameState *state) {
 
     int i;
     int score = 0;
@@ -944,7 +942,7 @@ int mineCardEffect(int choice1, int choice2, struct gameState *state, int handPo
 		return -1;
 	}
 	//card player wants
-	if (choice2 < treasure_map || choice2 > curse) //bugs here
+	if (choice2 > treasure_map || choice2 < curse) //bugs here//fixed for coverage
 	{
 		return -1;
 	}
@@ -1032,7 +1030,7 @@ int minionCardEffect(int choice1, int choice2, struct gameState *state, int hand
 int tributeCardEffect(struct gameState *state) {
 	int i;
 	int currentPlayer = whoseTurn(state);
-	int nextPlayer = currentPlayer - 1;//bug here +
+	int nextPlayer = currentPlayer + 1;//bug here +
 	int tributeRevealedCards[2] = { -1, -1 };
 
 	if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1) {
