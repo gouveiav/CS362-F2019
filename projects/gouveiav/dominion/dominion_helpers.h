@@ -2,6 +2,7 @@
 #define _DOMINION_HELPERS_H
 
 #include "dominion.h"
+#include <stdbool.h>
 
 int drawCard(int player, struct gameState *state);
 int updateCoins(int player, struct gameState *state, int bonus);
@@ -20,6 +21,6 @@ int mineCardEffect(int choice1, int choice2, struct gameState *state, int handPo
 int minionCardEffect(int choice1, int choice2, struct gameState *state, int handPos);
 int tributeCardEffect(struct gameState *state);
 
-
+bool myAssert(int a, int b);
 
 #endif

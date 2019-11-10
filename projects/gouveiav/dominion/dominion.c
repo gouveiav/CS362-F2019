@@ -4,14 +4,15 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <stdbool.h>
+
 
 bool myAssert(int a, int b) {
 	if (a == b) {
+		printf("PASS\n");
 		return true;
 	}
 	else {
-		fprintf(stderr, "Assertion Failure: %d and %d d not match", a, b);
+		printf("Failure: %d and %d do not match\n", a, b);
 		return false;
 	}
 }

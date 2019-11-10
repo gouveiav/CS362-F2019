@@ -6,7 +6,7 @@
 #include "rngs.h"
 
 //Unit test for mimion card
-int testingMinionCardEffect(int choice1, int choice2, struct gameState *post, int handPos) {
+void testingMinionCardEffect(int choice1, int choice2, struct gameState *post, int handPos) {
 
 
 
@@ -14,12 +14,20 @@ int testingMinionCardEffect(int choice1, int choice2, struct gameState *post, in
 
 
 int main() {
-	int k[10] = { adventurer, council_room, feast, gardens, mine,
-			 remodel, smithy, village, baron, great_hall
-	};
-	//making a game to test
-	struct gameState G;
-	printf("Testing minionCardEffect Function");
+	//int k[10] = { adventurer, council_room, feast, gardens, mine,
+	//		 remodel, smithy, village, baron, great_hall
+	//};
+	////making a game to test
+	//struct gameState G;
+	printf("Testing minionCardEffect Function\n");
 
+
+
+
+	printf("Test completed!\n");
+	printf("\n");
+
+
+	return 0;
 }
 
