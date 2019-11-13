@@ -10,8 +10,24 @@ playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
 #To run playdom you need to entere: ./playdom <any integer number> like ./playdom 10*/
 
-testDrawCard: testDrawCard.c dominion.o rngs.o
-	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
+testDrawCard: testdrawcard.c dominion.o rngs.o
+	gcc  -o testDrawCard -g  testdrawcard.c dominion.o rngs.o $(CFLAGS)
+
+random1: randomtestcard1.c dominion.o rngs.o
+	gcc  -o baronRandomTest -g   randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+
+random2: randomtestcard2.c dominion.o rngs.o
+	gcc  -o minionRandomTest -g  randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+
+random3: randomtestcard3.c dominion.o rngs.o
+	gcc  -o tributeRandomTest -g  randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+
+randomtestresults: random1 random2 random3
+	./baronRandomTest >> randomtestresults.out
+	./minionRandomTest >> randomtestresults.out
+	./tributeRandomTest >> randomtestresults.out
+	gcov -b -f dominion.c >> randomtestresults.out
+	cat dominion.c.gcov >> randomtestresults.out
 
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
@@ -29,3 +45,4 @@ all: playdom player
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f baronRandomTest minionRandomTest tributeRandomTest
