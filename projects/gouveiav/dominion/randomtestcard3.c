@@ -16,23 +16,23 @@ void randomTributeCheck() {
 
 
 int main() {
-
-	int i, n, r, p, deckCount, discardCount, handCount;
+	srand(time(NULL));
+	int players;
 
 	int k[10] = { adventurer, council_room, feast, gardens, mine,
 				 remodel, smithy, village, baron, great_hall
 	};
 
-	struct gameState G;
+	struct gameState *G = NULL;
 
 	printf("Random Testing tributeCardEffect.\n");
 
-	printf("RANDOM TESTS.\n");
 
 
 
 	printf("ALL TESTS OK\n");
+	printf("\n");
 
-	exit(0);
+	return 0;
 
 }

@@ -108,7 +108,7 @@ int main() {
 	}
 
 	printf("TESTING COMPLETE\n");
-
-	exit(0);
+	printf("\n");
+	return 0;
 
 }
