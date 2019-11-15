@@ -31,7 +31,7 @@ void randomMinionCheck(int choice1, int choice2, struct gameState *post, int han
 		
 		//currentPlayer discarded hand and drew 4
 		printf("Testing currentPlayer handCount: ");
-		myAssert(post->handCount[currentPlayer], 4);
+		myAssert(post->handCount[currentPlayer], 4); //should PASS
 
 		for (i = 0; i < pre.numPlayers; i++)
 		{
@@ -57,7 +57,7 @@ void randomMinionCheck(int choice1, int choice2, struct gameState *post, int han
 int main() {
 	srand(time(NULL));
 	int i, j;
-	int players;
+	int players, seed;
 	int loopAmount = 20;
 	int k[10] = { adventurer, council_room, feast, gardens, mine,
 				 remodel, smithy, village, baron, great_hall
@@ -74,7 +74,8 @@ int main() {
 	{
 		players = (rand() % (MAX_PLAYERS - 2 + 1) + 2);
 		handpos = (rand() % (26 - 0 + 1));
-		initializeGame(players, k, handpos, &G[i]);//handpos used for seed number
+		seed = (rand() % (26 - 1 + 1) +1);
+		initializeGame(players, k, seed, &G[i]);
 			choice1 = floor(Random() * 2); //0 or 1
 			if (choice1 == 0) {
 				choice2 = 1;
@@ -84,7 +85,7 @@ int main() {
 			}
 
 		for (j = 0; j < players; j++) {
-			G[i].handCount[j] = floor(Random() * MAX_HAND);
+			G[i].handCount[j] = floor(Random() * 20);
 
 		}
 		

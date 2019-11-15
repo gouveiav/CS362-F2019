@@ -1029,7 +1029,7 @@ int minionCardEffect(int choice1, int choice2, struct gameState *state, int hand
 int tributeCardEffect(struct gameState *state) {
 	int i;
 	int currentPlayer = whoseTurn(state);
-	int nextPlayer = currentPlayer - 1;//bug here +
+	int nextPlayer = currentPlayer + 1;//bug here +
 	int tributeRevealedCards[2] = { -1, -1 };
 
 	if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1) {
