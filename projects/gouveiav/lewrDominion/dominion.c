@@ -5,6 +5,17 @@
 #include <math.h>
 #include <stdlib.h>
 
+int myAssert(int a, int b) {
+	if (a == b) {
+		printf("PASS\n");
+		return 1;
+	}
+	else {
+		printf("Failure: %d != %d \n", a, b);
+		return -1;
+	}
+	return 0;
+}
 int compare(const void* a, const void* b) {
     if (*(int*)a > *(int*)b)
         return 1;
@@ -681,7 +692,9 @@ int getCost(int cardNumber)
     return -1;
 }
 
-int ambassadorCard(int choice1, int choice2 , struct gameState *state, int handPos,int currentPlayer) {
+
+
+int ambassadorEffect(int choice1, int choice2 , struct gameState *state, int handPos,int currentPlayer) {
 	int i;
 	int j = 0;		//used to check if player has enough cards to discard
 
@@ -743,7 +756,7 @@ int ambassadorCard(int choice1, int choice2 , struct gameState *state, int handP
 }
 
 void baronEffect(int choice1, struct gameState *state, int currentPlayer) {
-        
+	
     state->numBuys++;//Increase buys by 1!
     if (choice1 > 0) { //Boolean true or going to discard an estate
         int p = 0;//Iterator for hand!
@@ -796,6 +809,7 @@ void baronEffect(int choice1, struct gameState *state, int currentPlayer) {
 
 int mineEffect(int choice1, int choice2, struct gameState *state,int handPos, int currentPlayer) {
 	int i,j;
+	
     j = state->hand[currentPlayer][choice1];  //store card we will trash
 
     if (state->hand[currentPlayer][choice1] < copper)
@@ -941,6 +955,9 @@ void tributeEffect( struct gameState *state, int currentPlayer, int nextPlayer) 
         }
     }
 }
+
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
     int i;
@@ -986,7 +1003,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     case ambassador:
     
-		return ambassadorCard(choice1, choice2, state, handPos, currentPlayer);
+		return ambassadorEffect(choice1, choice2, state, handPos, currentPlayer);
 
     case baron:
 		baronEffect(choice1, state, currentPlayer);
