@@ -23,8 +23,8 @@ void randomTributeCheck(struct gameState *post, int currentPlayer, int nextPlaye
 	tributeEffect(post, currentPlayer, nextPlayer);
 
 	//test nextplayer
-	printf("Testing nextplayer bug: ");
-	myAssert(currentPlayer - 1, nextPlayer);//test should FAIL
+	printf("Testing nextplayer: ");
+	myAssert(currentPlayer + 1, nextPlayer);
 
 	if ((pre.discardCount[nextPlayer] + pre.deckCount[nextPlayer]) <= 1) {
 
@@ -66,7 +66,7 @@ void randomTributeCheck(struct gameState *post, int currentPlayer, int nextPlaye
 			myAssert(pre.handCount[currentPlayer]+2, post->handCount[currentPlayer]);
 		}
 		else { //Action Card
-			printf("Testing numActions bug: ");
+			printf("Testing numActions: ");
 			myAssert(pre.numActions + 2, post->numActions); 
 			//state->numActions = state->numActions + 3;//bug here was 2
 		}
