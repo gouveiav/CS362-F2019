@@ -16,14 +16,23 @@ void testAmbassadorCardEffect(int choice1, int choice2, struct gameState *post, 
 
 	//calling refactored minion function here
 	ambassadorEffect(choice1, choice2, post, handPos, currentPlayer);
+	if (choice2 > 2 || choice2 < 0)
+	{
+		printf("First if: return -1\n");
+	}
+	if (choice1 == handPos)
+	{
+		printf("Second if: return -1\n");
+	}
+
 	
 	//test that supply count for choosen card was increase by amount being discarded
-	int supplyCount = post->supplyCount[post->hand[currentPlayer][choice1]] + choice2;
+	int supplyCount = pre.supplyCount[pre.hand[currentPlayer][choice1]] + choice2;
 	printf("Testing supplyCount bug: ");
 	myAssert(post->supplyCount[post->hand[currentPlayer][choice1]], supplyCount);//should FAIL
 	
 	//test that each other player gained the revealed card
-	for (i = 0; i < post->numPlayers; i++)
+	for (i = 0; i < pre.numPlayers; i++)
 	{
 		if (i != currentPlayer)
 		{
@@ -67,6 +76,19 @@ int main() {
 	choice2 = 18;
 	handpos = 4;
 	testAmbassadorCardEffect(choice1, choice2, &G, handpos, currentPlayer);
+	
+	handpos = 4;
+	choice1 = handpos;
+	choice2 = 18;
+	testAmbassadorCardEffect(choice1, choice2, &G, handpos, currentPlayer);
+
+	choice1 = 5;
+	choice2 = 1;
+	handpos = 4;
+	testAmbassadorCardEffect(choice1, choice2, &G, handpos, currentPlayer);
+
+
+
 
 
 	printf("Test completed!\n");

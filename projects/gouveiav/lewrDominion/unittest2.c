@@ -12,65 +12,62 @@ void testingMinionCardEffect(int choice1, int choice2, struct gameState *post, i
 	//make a copy of the gameState to use in comparisons 
 	memcpy(&pre, post, sizeof(struct gameState));
 	printf("Testing with choice1: %d  choice2: %d\n", choice1, choice2);
-
-	for (i = 0; i < post->numPlayers; i++)
-	{
-		if (i != currentPlayer)
-		{
-			post->handCount[i] = 5;
-			
-		}
-	}
+	//set pre to players handCount to 5
+	
 	//calling refactored minion function here
 	minionEffect(choice1, choice2, post, handPos, currentPlayer);
-	for (i = 0; i < post->numPlayers; i++)
-	{
-		if (i != currentPlayer)
-		{
-			printf("Testing player handCount bug: ");
-			myAssert(post->handCount[i], 4); // should FAIL
-		}
-	}
-
-
+	
 	printf("Testing numActions: ");
 	myAssert(post->numActions, pre.numActions + 1);//should PASS
-	
-	printf("Testing for init coin bug: ");
-	myAssert(post->coins, pre.coins); // should FAIL
-	
-	if (choice1) {
-		printf("Testing for choice1 coin bug: ");
-		myAssert(post->coins, pre.coins +2); // should FAIL 
-		//due to init bug this will FAIL when in it will pass
-		//when init bug is fixed.
-	}
-	
-	for (i = 0; i < post->numPlayers; i++)
-	{
-		if (i != currentPlayer)
-		{
-			post->handCount[i] = 7;
 
-		}
-	}
-	//calling refactored minion function here
-	minionEffect(choice1, choice2, post, handPos, currentPlayer);
-	for (i = 0; i < post->numPlayers; i++)
-	{
-		if (i != currentPlayer)
+	if (choice1) {
+
+		printf("Testing for choice1 coin: ");
+		myAssert(post->coins, pre.coins +2); 
+		printf("Testing choice 1 currentPlayer handCount: ");
+		myAssert(post->handCount[currentPlayer], pre.handCount[currentPlayer] - 1);
+		for (i = 0; i < pre.numPlayers; i++)
 		{
-			printf("Testing player handCount bug: ");
-			myAssert(post->handCount[i], 4); // should PASS
+				if (i != currentPlayer)
+				{
+					printf("Testing choice1 Other players handCount: ");
+					myAssert(post->handCount[i], pre.handCount[i]); 
+				}
 		}
 	}
+	else if (choice2) {
+		printf("Testing for choice2 coin: ");
+		myAssert(post->coins, pre.coins); 
+		printf("Testing currentPlayer handCount: ");
+		myAssert(post->handCount[currentPlayer], 4);
+		
+		for (i = 0; i < pre.numPlayers; i++)
+		{
+			if (i != currentPlayer)
+			{
+				if (pre.handCount[i] > 4) {
+					printf("Testing Choice2 Other players handCount >4: ");
+					myAssert(post->handCount[i], 4); 
+				}
+				else {
+					printf("Testing Choice2 Other players handCount <4: ");
+					myAssert(post->handCount[i], pre.handCount[i]);
+				}
+			}
+			printf("Testing currentPlayer handCount: ");
+			myAssert(post->handCount[currentPlayer], pre.handCount[currentPlayer] - 1);
+		}
+	}
+	
+
+	
 
 
 }
 
 
 int main() {
-	
+	int i;
 	int k[10] = { adventurer, council_room, feast, gardens, mine,
 			 remodel, smithy, village, baron, great_hall
 	};
@@ -81,18 +78,56 @@ int main() {
 	
 	initializeGame(3, k, 22, &G);
 	int currentPlayer = whoseTurn(&G);
+
+	for (i = 0; i < G.numPlayers; i++)
+	{
+		if (i != currentPlayer)
+		{
+			G.handCount[i] = 5;
+
+		}
+	}
 	choice1 = 1;
 	choice2 = 0;
 	handpos = 4;
 	testingMinionCardEffect(choice1, choice2, &G, handpos, currentPlayer);
 
-
 	choice1 = 0;
-	choice2 = 1;
+	choice2 = 2;
 	handpos = 4;
 	
 	testingMinionCardEffect(choice1, choice2, &G, handpos, currentPlayer);
 
+	for (i = 0; i < G.numPlayers; i++)
+	{
+		if (i != currentPlayer)
+		{
+			G.handCount[i] = 4;
+
+		}
+	}
+
+	choice1 = 1;
+	choice2 = 0;
+	handpos = 4;
+
+	testingMinionCardEffect(choice1, choice2, &G, handpos, currentPlayer);
+	testingMinionCardEffect(choice1, choice2, &G, handpos, currentPlayer);
+
+	for (i = 0; i < G.numPlayers; i++)
+	{
+		if (i != currentPlayer)
+		{
+			G.handCount[i] = 5;
+
+		}
+	}
+
+	choice1 = 0;
+	choice2 = 1;
+	handpos = 4;
+
+	testingMinionCardEffect(choice1, choice2, &G, handpos, currentPlayer);
 	printf("Test completed!\n");
 	printf("\n");
 

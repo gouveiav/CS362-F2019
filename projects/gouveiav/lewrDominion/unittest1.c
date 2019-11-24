@@ -21,13 +21,23 @@ void testBaronCardEffect(int choice, struct gameState *post, int currentPlayer) 
 	myAssert(post->numBuys, pre.numBuys + 1);
 
 	//testing for added bug
-	if (post->hand[currentPlayer][choice] == estate) {
-		printf("Testing for coin bug: ");
+	if (pre.hand[currentPlayer][choice] == estate) {
+		printf("Testing coin: ");
 		myAssert(post->coins, pre.coins + 4); //found bug and failed
+		
+		printf("Testing handCount bug: ");
+		myAssert(post->handCount[currentPlayer]+1, pre.handCount[currentPlayer]);
+	}
+	else if (choice > pre.handCount[currentPlayer]) {
+		if (supplyCount(estate, &pre) > 0) {
+			printf("Testing supply[estate]count bug ");
+			myAssert(post->supplyCount[estate]+1, pre.supplyCount[estate]);
+		}
+	
 	}
 	// verify that your asserts pass, for the bugs your asserts may fail
 	
-
+	
 	
 
 }

@@ -58,15 +58,15 @@ void testTributeCardEffect(struct gameState *post, int currentPlayer, int nextPl
 	for (i = 0; i <= 2; i++) {
 		if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold) { //Treasure cards
 			printf("Testing coins: ");
-			myAssert(pre.coins, post->coins + 2);//should PASS
+			myAssert(pre.coins + 2, post->coins );//should PASS
 		}
 		else if (tributeRevealedCards[i] == estate || tributeRevealedCards[i] == duchy || tributeRevealedCards[i] == province || tributeRevealedCards[i] == gardens || tributeRevealedCards[i] == great_hall) { //Victory Card Found
 			printf("Testing drawCard: ");
-			myAssert(pre.handCount[currentPlayer], post->handCount[currentPlayer] + 2);
+			myAssert(pre.handCount[currentPlayer]+2, post->handCount[currentPlayer]);
 		}
 		else { //Action Card
 			printf("Testing numActions bug: ");
-			myAssert(pre.numActions, post->numActions + 2);
+			myAssert(pre.numActions+2, post->numActions );
 			//state->numActions = state->numActions + 3;//bug here was 2
 		}
 	

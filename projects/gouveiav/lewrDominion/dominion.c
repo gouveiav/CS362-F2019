@@ -703,7 +703,7 @@ int ambassadorEffect(int choice1, int choice2 , struct gameState *state, int han
         return -1;
     }
 
-    /* commenting out for assignment 2
+    /* commenting out for assignment 2  bug here
     if (choice1 == handPos)
     {
         return -1;
@@ -729,7 +729,7 @@ int ambassadorEffect(int choice1, int choice2 , struct gameState *state, int han
     state->supplyCount[state->hand[currentPlayer][choice1]] += choice2;
 
     //each other player gains a copy of revealed card
-    for (i = 0; i > state->numPlayers; i++)
+    for (i = 0; i > state->numPlayers; i++)  //bug i < state
     {
         if (i != currentPlayer)
         {
@@ -770,7 +770,7 @@ void baronEffect(int choice1, struct gameState *state, int currentPlayer) {
                     state->hand[currentPlayer][p] = state->hand[currentPlayer][p+1];
                 }
                 state->hand[currentPlayer][state->handCount[currentPlayer]] = -1;
-                state->handCount[currentPlayer];
+                state->handCount[currentPlayer]; //bug here --
                 card_not_discarded = 0;//Exit the loop
             }
             else if (p > state->handCount[currentPlayer]) {
@@ -781,7 +781,7 @@ void baronEffect(int choice1, struct gameState *state, int currentPlayer) {
                 if (supplyCount(estate, state) > 0) {
                     gainCard(estate, state, 0, currentPlayer);
 
-                    state->supplyCount[estate];//Decrement estates
+                    state->supplyCount[estate];//Decrement estates Bug here --
                     if (supplyCount(estate, state) == 0) {
                         isGameOver(state);
                     }
@@ -812,7 +812,7 @@ int mineEffect(int choice1, int choice2, struct gameState *state,int handPos, in
 	
     j = state->hand[currentPlayer][choice1];  //store card we will trash
 
-    if (state->hand[currentPlayer][choice1] < copper)
+    if (state->hand[currentPlayer][choice1] < copper)//|| state->hand[currentPlayer][choice1] > gold
     {
         return -1;
     }
@@ -875,10 +875,10 @@ void minionEffect(int choice1, int choice2,struct gameState *state, int handPos,
         {
             if (i != currentPlayer)
             {
-                if ( state->handCount[currentPlayer] > 4 )
+                if ( state->handCount[currentPlayer] > 4 )//bug should be i
                 {
                     //discard hand
-                    while( state->handCount[currentPlayer] > 0 )
+                    while( state->handCount[currentPlayer] > 0 )//but should be i
                     {
                         discardCard(handPos, i, state, 0);
                     }
@@ -898,13 +898,13 @@ void tributeEffect( struct gameState *state, int currentPlayer, int nextPlayer) 
 
 	int i;
 	int tributeRevealedCards[2] = { -1, -1 };
-    if ((state->discardCount[currentPlayer] + state->deckCount[currentPlayer]) <= 1) {
-        if (state->deckCount[currentPlayer] > 0) {
-            tributeRevealedCards[0] = state->deck[currentPlayer][state->deckCount[currentPlayer]-1];
-            state->deckCount[currentPlayer]--;
+    if ((state->discardCount[currentPlayer] + state->deckCount[currentPlayer]) <= 1) {//bug nextPlayer
+        if (state->deckCount[currentPlayer] > 0) {//bug nextPlayer
+            tributeRevealedCards[0] = state->deck[currentPlayer][state->deckCount[currentPlayer]-1];//both should be np
+            state->deckCount[currentPlayer]--;//nextPlayer bug
         }
-        else if (state->discardCount[currentPlayer] > 0) {
-            tributeRevealedCards[0] = state->discard[currentPlayer][state->discardCount[currentPlayer]-1];
+        else if (state->discardCount[currentPlayer] > 0) {//nextplayer
+            tributeRevealedCards[0] = state->discard[currentPlayer][state->discardCount[currentPlayer]-1];//nextplayer
             state->discardCount[nextPlayer]--;
         }
         else {
@@ -916,7 +916,7 @@ void tributeEffect( struct gameState *state, int currentPlayer, int nextPlayer) 
     }
 
     else {
-        if (state->deckCount[currentPlayer] == 0) {
+        if (state->deckCount[currentPlayer] == 0) {//all in statement should be nextplayer
             for (i = 0; i < state->discardCount[currentPlayer]; i++) {
                 state->deck[currentPlayer][i] = state->discard[currentPlayer][i];//Move to deck
                 state->deckCount[currentPlayer]++;
@@ -924,14 +924,14 @@ void tributeEffect( struct gameState *state, int currentPlayer, int nextPlayer) 
                 state->discardCount[currentPlayer]--;
             }
 
-            shuffle(currentPlayer,state);//Shuffle the deck
+            shuffle(currentPlayer,state);//Shuffle the deck //bug nextplayer
         }
         tributeRevealedCards[0] = state->deck[currentPlayer][state->deckCount[currentPlayer]-1];
         state->deck[currentPlayer][state->deckCount[currentPlayer]--] = -1;
         state->deckCount[currentPlayer]--;
         tributeRevealedCards[1] = state->deck[currentPlayer][state->deckCount[currentPlayer]-1];
         state->deck[currentPlayer][state->deckCount[currentPlayer]--] = -1;
-        state->deckCount[currentPlayer]--;
+        state->deckCount[currentPlayer]--;// all above should be nextPlayer
     }
 
     if (tributeRevealedCards[0] == tributeRevealedCards[1]) { //If we have a duplicate card, just drop one
@@ -941,7 +941,7 @@ void tributeEffect( struct gameState *state, int currentPlayer, int nextPlayer) 
     }
 
 
-    for (i = 0; i <= 3; i ++) {
+    for (i = 0; i <= 3; i ++) {//bug should be <=2
         if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold) { //Treasure cards
             state->coins += 2;
         }

@@ -19,18 +19,29 @@ void randomMinionCheck(int choice1, int choice2, struct gameState *post, int han
 	minionEffect(choice1, choice2, post, handPos, currentPlayer);
 	
 	printf("Testing numActions: ");
-	myAssert(post->numActions, pre.numActions + 1); //should PASS
+	myAssert(post->numActions, pre.numActions + 1); 
 
 	if (choice1) {
 		printf("Testing for coin bug: ");
 		myAssert(post->coins, pre.coins + 2); // should FAIL
+		printf("Testing choice 1 currentPlayer handCount: ");
+		myAssert(post->handCount[currentPlayer], pre.handCount[currentPlayer] - 1);
+		for (i = 0; i < pre.numPlayers; i++)
+		{
+			if (i != currentPlayer)
+			{
+				printf("Testing choice1 Other players handCount: ");
+				myAssert(post->handCount[i], pre.handCount[i]);
+			}
+		}
+	
 	}
 	else if (choice2) {
-		printf("Testing for coin bug: ");
+		printf("Testing choice 2 coin: ");
 		myAssert(post->coins, pre.coins); // should FAIL
 		
 		//currentPlayer discarded hand and drew 4
-		printf("Testing currentPlayer handCount: ");
+		printf("Testing choice 2 currentPlayer handCount: ");
 		myAssert(post->handCount[currentPlayer], 4); //should PASS
 
 		for (i = 0; i < pre.numPlayers; i++)
@@ -38,15 +49,16 @@ void randomMinionCheck(int choice1, int choice2, struct gameState *post, int han
 			if (i != currentPlayer)
 			{
 				if (pre.handCount[i] > 4) {
-					printf("Testing player handCount bug: ");
+					printf("Testing choice 2 Other player handCount > 4: ");
 					myAssert(post->handCount[i], 4); // should Mix FAIL
 				}
 				else {
-					printf("Testing player handCount bug: ");
+					printf("Testing choice 2 Other player handCount < 4: ");
 					myAssert(post->handCount[i], pre.handCount[i]); // should Mix FAIL
 				}
 			}
-			
+			printf("Testing choice 2 currentPlayer handCount: ");
+			myAssert(post->handCount[currentPlayer], 4); //should PASS
 
 		}
 
