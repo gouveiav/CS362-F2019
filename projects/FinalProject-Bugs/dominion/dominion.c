@@ -16,6 +16,7 @@ int myAssert(int a, int b) {
 	}
 	return 0;
 }
+
 int compare(const void* a, const void* b) {
     if (*(int*)a > *(int*)b)
         return 1;
@@ -814,17 +815,18 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     case mine:
         j = state->hand[currentPlayer][choice1];  //store card we will trash
-
+		
+		//must be a treasure card chosen to trash
         if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
         {
             return -1;
         }
-
+		//checks if trade card is a valid card: here poss bug as choice2 must also be treasure
         if (choice2 > treasure_map || choice2 < curse)
         {
             return -1;
         }
-
+		//bug 2 here
         if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
         {
             return -1;
