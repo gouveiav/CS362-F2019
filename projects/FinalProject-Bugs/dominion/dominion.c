@@ -5,6 +5,17 @@
 #include <math.h>
 #include <stdlib.h>
 
+int myAssert(int a, int b) {
+	if (a == b) {
+		printf("PASS\n");
+		return 1;
+	}
+	else {
+		printf("Fail: %d != %d \n", a, b);
+		return -1;
+	}
+	return 0;
+}
 int compare(const void* a, const void* b) {
     if (*(int*)a > *(int*)b)
         return 1;
