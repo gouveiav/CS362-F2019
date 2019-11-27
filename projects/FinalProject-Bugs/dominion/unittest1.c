@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "dominion.h"
 #include "dominion_helpers.h"
-#include <string.h>
+
 
 
 
@@ -21,25 +21,12 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 	//calling cardEffect function with 11 = mine card
 	cardEffect(card, choice1, choice2, choice3, post, handPos, bonus);
 
-
-	//if (pre.hand[currentPlayer][choice1] < copper || pre.hand[currentPlayer][choice1] > gold)
-	//{
-	//	printf("First if: return -1\n");
-	//}
-	////card player wants
-	//if (choice2 > treasure_map || choice2 < curse) //bugs here//fixed for coverage
-	//{
-	//	printf("Second if: return -1\n");
-	//}
-
 	if ((getCost(pre.hand[currentPlayer][choice1]) + 3) > getCost(choice2))
 	{
 		printf("Third if: return -1\n"); exit(1);
 	}
 	
-	//printf("Testing handCount: ");
-	//myAssert(pre.handCount[currentPlayer], post->handCount[currentPlayer]);
-	
+
 	for (i = 0; i < pre.handCount[currentPlayer]; i++)
 	{
 		if (pre.hand[currentPlayer][i] == pre.hand[currentPlayer][choice1])
@@ -66,7 +53,7 @@ int main() {
 
 	//making a game to test
 	struct gameState G;
-	printf("Testing Bug1.\n");
+	printf("Testing Bug 1.\n");
 	printf("Testing mine Case in cardEffect Function\n");
 	//trash a treasure and gain a T up to 3 more
 	initializeGame(3, k, 22, &G);
