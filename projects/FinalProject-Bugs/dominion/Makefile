@@ -64,5 +64,5 @@ all: playdom player
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
-	rm -f unittest1Baron unittest2Minion unittest3Ambassador unittest4Tribute unittest5Mine 
-	rm -f baronRandomTest minionRandomTest tributeRandomTest
+	rm -f unittest1Bug1 unittest2Bug2 unittest3Bug3 unittest4Bug4 unittest5Bug5 unittest6Bug6
+	rm -f unittest7Bug7 unittest8Bug8 unittest9Bug9 unittest10Bug10
