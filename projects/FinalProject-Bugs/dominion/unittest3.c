@@ -4,10 +4,12 @@
 #include "dominion.h"
 
 
-void testMineCardEffect(int card, int choice1, int choice2, struct gameState *post, int handPos, int currentPlayer) {
+void testRemodelCardEffect(int card, int choice1, int choice2, struct gameState *post, int handPos, int currentPlayer) {
 	struct gameState pre;
-	int choice3 = 0;
+	int choice3 = 0; int i; int count = 0;
 	int *bonus = 0;
+	int j = pre.hand[currentPlayer][choice1];
+	
 	//make a copy of the gameState to use in comparisons 
 	memcpy(&pre, post, sizeof(struct gameState));
 
@@ -15,10 +17,23 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 	//calling cardEffect function with 12 = remodel card
 	cardEffect(card, choice1, choice2, choice3, post, handPos, bonus);
 	
-	int j = pre.hand[currentPlayer][choice1];
+	
 
+	for (i = 0; i < pre.handCount[currentPlayer]; i++) {
+		if (post->hand[currentPlayer][i] == choice2) {
+			count++;
+		}
+	
+	}
+	printf("Testing for Added card: ");
+	myAssert(count, 1);
+	count = 0;
 
-
+	/*if ((getCost(j) + 2) > getCost(choice2))
+	{
+		printf("Testing Cost Values: ");
+		myAssert((getCost(j) + 1), getCost(choice2));
+	}*/
 
 }
 
@@ -46,9 +61,14 @@ int main(int argc, char** argv) {
 	testRemodelCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
 
 	choice1 = 13;//smithy cost4
-	choice2 = 6;//advent cost6
+	choice2 = 2;//duchy cost5
+	G.hand[currentPlayer][choice1] = smithy;
+	testRemodelCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
 
-
+	choice1 = 20;//ambass cost3
+	choice2 = 15;//duchy cost4
+	G.hand[currentPlayer][choice1] = ambassador;
+	testRemodelCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
 
 	printf("Test Completed!\n");
 	printf("\n");
