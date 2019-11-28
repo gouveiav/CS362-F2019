@@ -8,7 +8,6 @@
 void testMineCardEffect(int card, int choice1, int choice2, struct gameState *post, int handPos, int currentPlayer) {
 	struct gameState pre;
 	int choice3 = 0;
-	int i;
 	int *bonus = 0;
 	//make a copy of the gameState to use in comparisons 
 	memcpy(&pre, post, sizeof(struct gameState));
@@ -17,13 +16,19 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 
 	//calling cardEffect function with 11 = mine card
 	cardEffect(card, choice1, choice2, choice3, post, handPos, bonus);
-
-	if ((getCost(pre.hand[currentPlayer][choice1]) + 3) > getCost(choice2))
+	
+	int j = pre.hand[currentPlayer][choice1];
+	//printf("jjjjjjjj:%d\n", j);
+	//printf("cost of choice1 +3: %d ", getCost(choice1) + 3);
+	//printf("cost of choice1player: %d \n", getCost(j));
+	//printf("cost of choice2 %d: \n", getCost(choice2));
+	
+	if ( (getCost(j) + 3) > getCost(choice2))
 	{
 		//trash a treasure card and gain a treasure card costing up to 3 more
 		//Treasure cards copper4 value 0, silver5 value 3, gold6 value 6
-		printf("Testing cost values\n");
-		myAssert(getCost(pre.hand[currentPlayer][choice1]), getCost(choice2) );
+		printf("Testing Cost Values: ");
+		myAssert( (getCost(j)+3), getCost(choice2) );
 	
 	
 	}
@@ -34,7 +39,6 @@ int main() {
 	int choice1, choice2;
 	int copper = 4; int silver = 5;	int gold = 6;
 	int handPos = 3; int card = 11;
-	int card = 11; //mine card
 	int currentPlayer;
 
 	int k[10] = { adventurer, council_room, feast, gardens, mine,
@@ -44,7 +48,7 @@ int main() {
 	struct gameState G;
 
 	printf("Testing Bug 2.\n");
-	printf("Testing mine Case Getcost\n");
+	//printf("Testing mine Case Getcost\n");
 
 	//trash a treasure and gain a Treasure up to 3 
 	initializeGame(3, k, 22, &G);
@@ -55,10 +59,16 @@ int main() {
 	//testing mine case w/choice2 between 0 and 26
 	choice1 = copper;
 	choice2 = copper;
+	G.hand[currentPlayer][choice1] = copper;
 	testMineCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
 	
-	choice1 = gold;
+	//choice1 = gold;
 	choice2 = gold;
+	G.hand[currentPlayer][choice1] = gold;
+	testMineCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
+	choice1 = silver;
+	choice2 = silver;
+	G.hand[currentPlayer][choice1] = silver;
 	testMineCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
 	printf("Test completed!\n");
 	printf("\n");

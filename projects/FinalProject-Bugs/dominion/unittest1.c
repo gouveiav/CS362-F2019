@@ -21,18 +21,12 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 	//calling cardEffect function with 11 = mine card
 	cardEffect(card, choice1, choice2, choice3, post, handPos, bonus);
 
-	if ((getCost(pre.hand[currentPlayer][choice1]) + 3) > getCost(choice2))
-	{
-		printf("Third if: return -1\n"); exit(1);
-	}
-	
-
 	for (i = 0; i < pre.handCount[currentPlayer]; i++)
 	{
 		if (pre.hand[currentPlayer][i] == pre.hand[currentPlayer][choice1])
 		{
-			printf("Card trashed check\n");
-			myAssert(pre.supplyCount[choice1]+1, post->supplyCount[choice1]);
+			printf("Card Trashed Check: ");
+			myAssert(pre.supplyCount[choice1], post->supplyCount[choice1]+1);
 			break;
 		}
 	}
@@ -42,8 +36,8 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 
 int main() {
 	int choice1, choice2;
-	int treasureCard = 26;
 	int copper = 4;
+	int silver = 5;
 	int gold = 6;
 	int handPos = 3;
 	int card = 11; //mine card
@@ -54,7 +48,7 @@ int main() {
 	//making a game to test
 	struct gameState G;
 	printf("Testing Bug 1.\n");
-	printf("Testing mine Case in cardEffect Function\n");
+	//printf("Testing mine Case in cardEffect Function\n");
 	//trash a treasure and gain a T up to 3 more
 	initializeGame(3, k, 22, &G);
 
@@ -62,10 +56,13 @@ int main() {
 
 	//testing mine case w/choice1 between 4 and 6 
 	//testing mine case w/choice2 between 0 and 26
-	choice1 = 3;
+	choice1 = copper;
+	choice2 = silver;
+	testMineCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
+	
+	choice1 = silver;
 	choice2 = gold;
 	testMineCardEffect(card, choice1, choice2, &G, handPos, currentPlayer);
-
 	
 	
 
