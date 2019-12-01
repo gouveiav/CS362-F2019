@@ -5,6 +5,18 @@
 #include <math.h>
 #include <stdlib.h>
 
+int myAssert(int a, int b) {
+	if (a == b) {
+		printf("PASS\n");
+		return 1;
+	}
+	else {
+		printf("Fail: %d != %d \n", a, b);
+		return -1;
+	}
+	return 0;
+}
+
 int compare(const void* a, const void* b) {
     if (*(int*)a > *(int*)b)
         return 1;
@@ -803,17 +815,18 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     case mine:
         j = state->hand[currentPlayer][choice1];  //store card we will trash
-
+		
+		//must be a treasure card chosen to trash
         if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
         {
             return -1;
         }
-
+		//checks if trade card is a valid card: here poss bug as choice2 must also be treasure
         if (choice2 > treasure_map || choice2 < curse)
         {
             return -1;
         }
-
+		//bug 2 here
         if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
         {
             return -1;
@@ -828,7 +841,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         for (i = 0; i < state->handCount[currentPlayer]; i++)
         {
             if (state->hand[currentPlayer][i] == j)
-            {
+            {	//Bug 1 here. Card not being removed from game
                 discardCard(i, currentPlayer, state, 0);
                 break;
             }
@@ -1022,6 +1035,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         return 0;
 
     case tribute:
+
         if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1) {
             if (state->deckCount[nextPlayer] > 0) {
                 tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
@@ -1057,18 +1071,19 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
             state->deckCount[nextPlayer]--;
         }
-
-        if (tributeRevealedCards[0] == tributeRevealedCards[1]) { //If we have a duplicate card, just drop one
+		//If we have a duplicate card, just drop one
+        if (tributeRevealedCards[0] == tributeRevealedCards[1]) { 
             state->playedCards[state->playedCardCount] = tributeRevealedCards[1];
             state->playedCardCount++;
             tributeRevealedCards[1] = -1;
         }
 
         for (i = 0; i <= 2; i ++) {
-            if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold) { //Treasure cards
+			//Treasure card revealed
+            if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold) { 
                 state->coins += 2;
             }
-
+			//Victory card revealed, gain 2 cards
             else if (tributeRevealedCards[i] == estate || tributeRevealedCards[i] == duchy || tributeRevealedCards[i] == province || tributeRevealedCards[i] == gardens || tributeRevealedCards[i] == great_hall) { //Victory Card Found
                 drawCard(currentPlayer, state);
                 drawCard(currentPlayer, state);
