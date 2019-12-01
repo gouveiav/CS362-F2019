@@ -9,6 +9,9 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 	struct gameState pre;
 	int choice3 = 0;
 	int *bonus = 0;
+	//trash a treasure card and gain a treasure card costing up to 3 more
+	//Treasure cards copper4 value 0, silver5 value 3, gold6 value 6
+		
 	//make a copy of the gameState to use in comparisons 
 	memcpy(&pre, post, sizeof(struct gameState));
 
@@ -22,17 +25,42 @@ void testMineCardEffect(int card, int choice1, int choice2, struct gameState *po
 	//printf("cost of choice1 +3: %d ", getCost(choice1) + 3);
 	//printf("cost of choice1player: %d \n", getCost(j));
 	//printf("cost of choice2 %d: \n", getCost(choice2));
-	
-	if ( (getCost(j) + 3) > getCost(choice2))
-	{
-		//trash a treasure card and gain a treasure card costing up to 3 more
-		//Treasure cards copper4 value 0, silver5 value 3, gold6 value 6
-		printf("Testing Cost Values: ");
-		myAssert( (getCost(j)+3), getCost(choice2) );
-	
-	
+	if (j == copper) {
+		
+		if (choice2 == gold) {
+			printf("Testing Cost Values: ");
+			myAssert((getCost(j) + 6), getCost(choice2));
+			printf("return -1\n");
+		}
+		if (choice2 == silver) {	
+			printf("Testing Cost Values: ");
+			myAssert((getCost(j) + 3), getCost(choice2));
+
+		}
+		if (choice2 == copper) {
+			printf("Testing Cost Values: ");
+			myAssert((getCost(j)), getCost(choice2));
+		}
+
 	}
-	
+	else if (j == gold) {
+		if (choice2 == gold) {
+			printf("Testing Cost Values: ");
+			myAssert((getCost(j)), getCost(choice2));
+		}
+		if (choice2 == silver) {
+			printf("Testing Cost Values: ");
+			myAssert((getCost(j)-3), getCost(choice2));
+
+		}
+		if (choice2 == copper) {
+			printf("Testing Cost Values: ");
+			myAssert((getCost(j)-6), getCost(choice2));
+			printf("return -1\n");
+		}
+
+
+	}
 }
 
 int main() {
