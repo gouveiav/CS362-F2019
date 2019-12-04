@@ -1,14 +1,16 @@
-#include "rngs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "dominion.h"
 #include "dominion_helpers.h"
+#include "rngs.h"
 
 int main(int argc, char** argv) {
-   
-	int i, j;
 
-	int expectedScore = 11;
+	int i;
+
+	//int expectedScore = 11;
 	int testScore;
 
 	struct gameState G;
@@ -19,7 +21,7 @@ int main(int argc, char** argv) {
 	G.handCount[0] = 3;
 	G.discardCount[0] = 3;
 	G.deckCount[0] = 5;
-	
+
 	for (i = 0; i < 3; ++i)
 	{
 		G.hand[0][i] = estate;
@@ -31,10 +33,10 @@ int main(int argc, char** argv) {
 	G.deck[0][4] = estate;
 	testScore = scoreFor(0, &G);
 
-	printf("Testing Bug5 scoreFor().\n");
+	printf("---\nBegin Testing Bug #5 (scoreFor()):\n---\n");
 
 	printf("Expected score for player 0: 11 || Actual score: %d\n", testScore);
-	
+
 
 
 
@@ -44,4 +46,3 @@ int main(int argc, char** argv) {
 	printf("\n");
 	return 0;
 }
-

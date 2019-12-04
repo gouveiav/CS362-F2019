@@ -1,14 +1,16 @@
-#include "rngs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "dominion.h"
 #include "dominion_helpers.h"
+#include "rngs.h"
 
 
 int main(int argc, char** argv) {
- 
 
-	printf("Testing Bug4 isGameOver().\n");
+
+	printf("---\nBegin Testing Bug #4 (isGameOver()):\n---\n");
 
 	struct gameState G;
 	int k[10] = { adventurer, council_room, feast, gardens, mine,
@@ -39,4 +41,3 @@ int main(int argc, char** argv) {
 	printf("\n");
 	return 0;
 }
-
